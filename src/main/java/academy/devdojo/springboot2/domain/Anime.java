@@ -1,20 +1,19 @@
 package academy.devdojo.springboot2.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class Anime {
-
+    private Long Id;
     private String name;
 
-    public Anime(String name) {
-        this.name = name;
-    }
-
-    public Anime() {
-    }
+    //Posso fazer tbm
+    //add um anotation pra dizer que jo JSON vem X mas quero que meta esse X aqui no nomeCharacter
+//    @JsonProperty("X")
+//     private String nameCharacter;
 
 }
 
