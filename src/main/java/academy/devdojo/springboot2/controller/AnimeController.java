@@ -1,6 +1,9 @@
 package academy.devdojo.springboot2.controller;
 
 import academy.devdojo.springboot2.domain.Anime;
+import academy.devdojo.springboot2.repository.AnimeRepository;
+import academy.devdojo.springboot2.requests.AnimePostRequestBody;
+import academy.devdojo.springboot2.requests.AnimePutRequestBody;
 import academy.devdojo.springboot2.service.AnimeService;
 import academy.devdojo.springboot2.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +35,12 @@ public class AnimeController {
     public ResponseEntity<Anime> findById (@PathVariable Long id){
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
 
-        return ResponseEntity.ok(animeService.findById(id));
+        return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
 
     @PostMapping                        //Aqui o jakson faz o mapeamento com os atributos exatamente iguais aos atributos de classe, ele faz o mapeamento
-    public ResponseEntity<Anime> save (@RequestBody Anime anime){
+    public ResponseEntity<Anime> save (@RequestBody AnimePostRequestBody anime){
     return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
     }
 
@@ -49,8 +52,9 @@ public class AnimeController {
     }
 
     @PutMapping
-    public ResponseEntity<Anime> update (@RequestBody Anime anime){
-        return new ResponseEntity<Anime>((Anime) animeService.update(anime), HttpStatus.CREATED);
+    public ResponseEntity<Void> update (@RequestBody AnimePutRequestBody anime){
+        animeService.update(anime);
+        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
     }
 
 }

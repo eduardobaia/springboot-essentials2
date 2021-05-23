@@ -1,14 +1,14 @@
-server:
-    error:
-      include-stacktrace: on_trace_param
-
-spring:
-  datasource:
-     ## url: jdbc:mysql://localhost:3306/animes?useSSL=false&createDatabaseIfNotExists=true&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      url: jdbc:mysql://localhost:3306/animes?allowPublicKeyRetrieval=true&sslMode=DISABLED&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExists=true
-#allowPublicKeyRetrieval=true&sslMode=DISABLED&useLegacyDatetimeCode=false&serverTimezone=UTC
-      username: root
-      password: devdojo
-  jpa:
-    hibernate:
-      ddl-auto: update
+#server:
+#    error:
+#      include-stacktrace: on_trace_param
+#
+#spring:
+#  datasource:
+#     ## url: jdbc:mysql://localhost:3306/animes?useSSL=false&createDatabaseIfNotExists=true&allowPublicKeyRetrieval=true&serverTimezone=UTC
+#      url: jdbc:mysql://localhost:3306/animes?allowPublicKeyRetrieval=true&sslMode=DISABLED&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExists=true
+##allowPublicKeyRetrieval=true&sslMode=DISABLED&useLegacyDatetimeCode=false&serverTimezone=UTC
+#      username: root
+#      password: devdojo
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
