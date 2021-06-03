@@ -31,11 +31,19 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.listAll(), HttpStatus.OK);
     }
 
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable Long id) {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
 
         return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
+    }
+
+    @GetMapping(path = "/find")
+    public ResponseEntity<List<Anime>> findByName(@RequestParam(required = false) String name) {
+        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+
+        return ResponseEntity.ok(animeService.findByName(name));
     }
 
 
