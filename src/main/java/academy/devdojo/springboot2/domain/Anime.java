@@ -28,5 +28,6 @@ public class Anime {
 //    @JsonProperty("X")
 //     private String nameCharacter;
 
+
 }
 

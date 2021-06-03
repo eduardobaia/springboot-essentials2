@@ -25,36 +25,37 @@ public class AnimeController {
     private final AnimeService animeService;
 
     @GetMapping
-    public ResponseEntity<List<Anime>> list (){
+    public ResponseEntity<List<Anime>> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
 
         return new ResponseEntity<>(animeService.listAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Anime> findById (@PathVariable Long id){
+    public ResponseEntity<Anime> findById(@PathVariable Long id) {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
 
         return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
 
-    @PostMapping                        //Aqui o jakson faz o mapeamento com os atributos exatamente iguais aos atributos de classe, ele faz o mapeamento
-    public ResponseEntity<Anime> save (@RequestBody AnimePostRequestBody anime){
-    return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+    @PostMapping
+    //Aqui o jakson faz o mapeamento com os atributos exatamente iguais aos atributos de classe, ele faz o mapeamento
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody anime) {
+        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
     }
 
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete (@PathVariable long id){
+    public ResponseEntity<Void> delete(@PathVariable long id) {
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
-    public ResponseEntity<Void> update (@RequestBody AnimePutRequestBody anime){
+    public ResponseEntity<Void> update(@RequestBody AnimePutRequestBody anime) {
         animeService.update(anime);
-        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
