@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.List;
+
 import org.springframework.core.ParameterizedTypeReference;
 
 @Log4j2
@@ -15,7 +16,7 @@ public class SpringClient {
     public static void main(String[] args) {
 
         //getForEntity Retorna o objeto dentro de um wrapper.
-        ResponseEntity<Anime> entity= new RestTemplate().getForEntity("http://localhost:8080/animes/2", Anime.class);
+        ResponseEntity<Anime> entity = new RestTemplate().getForEntity("http://localhost:8080/animes/2", Anime.class);
         log.info(entity);
 
         //getForObject Retorna o objeto diretamentw.
@@ -23,10 +24,10 @@ public class SpringClient {
         log.info(obj);
 
 
-     ResponseEntity<List<Anime>> exchange=   new RestTemplate().exchange("http://localhost:8080/animes/all", HttpMethod.GET,null,
-                new ParameterizedTypeReference<>() {});
+        ResponseEntity<List<Anime>> exchange = new RestTemplate().exchange("http://localhost:8080/animes/all", HttpMethod.GET, null,
+                new ParameterizedTypeReference<>() {
+                });
         log.info(exchange.getBody());
-
 
 
 //        Anime kingdom = Anime.builder().name("kingdom").build();
@@ -35,17 +36,36 @@ public class SpringClient {
 //     log.info("saved anime {}",kindgomSaved);
 
         Anime samurai = Anime.builder().name("samurai test").build();
-        ResponseEntity<Anime> samuraiSaved =  new RestTemplate().exchange("http://localhost:8080/animes/",
+        ResponseEntity<Anime> samuraiSaved = new RestTemplate().exchange("http://localhost:8080/animes/",
                 HttpMethod.POST,
                 new HttpEntity<>(samurai, creatJsonHeader()),
                 Anime.class);
-        log.info("saved anime {}",samuraiSaved);
+        log.info("saved anime {}", samuraiSaved);
 
+        //UPDATE
+        Anime animeTobeUpdated = samuraiSaved.getBody();
+        animeTobeUpdated.setName("Samurai 2 updated");
 
+        ResponseEntity<Void> samuraiUpdated = new RestTemplate().exchange("http://localhost:8080/animes/",
+                HttpMethod.PUT,
+                new HttpEntity<>(animeTobeUpdated, creatJsonHeader()),
+                Void.class);
+
+        log.info("saved anime {}", samuraiUpdated);
+
+        //DELETE
+        ResponseEntity<Void> samuraiDelete = new RestTemplate().exchange("http://localhost:8080/animes/{id}",
+                HttpMethod.DELETE,
+                null,
+                Void.class,
+                animeTobeUpdated.getId()
+                );
+
+        log.info("saved anime {}", samuraiDelete);
 
     }
 
-    private static HttpHeaders creatJsonHeader(){
+    private static HttpHeaders creatJsonHeader() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         return httpHeaders;
